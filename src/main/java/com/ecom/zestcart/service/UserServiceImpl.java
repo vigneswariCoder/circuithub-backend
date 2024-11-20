@@ -6,6 +6,8 @@ import com.ecom.zestcart.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections; // Import Collections to create a singleton list
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -14,6 +16,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerUser(User user) {
         user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(Collections.singletonList("user"));
+        }
         return userRepository.save(user);
     }
 

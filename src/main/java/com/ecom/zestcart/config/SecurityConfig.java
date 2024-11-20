@@ -27,7 +27,8 @@ public class SecurityConfig {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .requestMatchers("/auth/**", "/api/**").permitAll()
+                .requestMatchers("/auth/**", "/api/open/**","fileUploads/**").permitAll()
+                .requestMatchers("/api/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JWTFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
@@ -39,4 +40,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
 }

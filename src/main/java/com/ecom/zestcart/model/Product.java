@@ -3,6 +3,8 @@ package com.ecom.zestcart.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(collection = "products")
 public class Product {
     @Id
@@ -10,9 +12,15 @@ public class Product {
     private String name;
     private String description;
     private double price;
+    private double offer;
+    private double height;
+    private double width;
+    private double weight;
+    private List<String> storage;  // Explicitly define the type of List
     private String imageUrl;
-    private String category;
+    private String categoryId;
     private int stock;
+    private String productFileId;
 
     public String getId() {
         return id;
@@ -46,6 +54,46 @@ public class Product {
         this.price = price;
     }
 
+    public double getOffer() {
+        return offer;
+    }
+
+    public void setOffer(double offer) {
+        this.offer = offer;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public List<String> getStorage() {
+        return storage;
+    }
+
+    public void setStorage(List<String> storage) {
+        this.storage = storage;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -54,12 +102,12 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public int getStock() {
@@ -69,5 +117,12 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
-// Getters and Setters
+
+    public String getProductFileId() {
+        return productFileId;
+    }
+
+    public void setProductFileId(String productFileId) {
+        this.productFileId = productFileId;
+    }
 }

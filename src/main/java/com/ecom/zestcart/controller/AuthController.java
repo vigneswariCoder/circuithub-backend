@@ -15,26 +15,25 @@ import java.util.List;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
+
     @Autowired
     private UserService userService;
 
     @Autowired
     private JWTService jwtService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signup")
-    public User registerUser(@RequestBody User user) {
-        return userService.registerUser(user);
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        User registeredUser = userService.registerUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/signin")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         User existingUser = userService.findByUsername(user.getUsername());
         if (existingUser != null && PasswordUtil.matches(user.getPassword(), existingUser.getPassword())) {
-            String token = jwtService.generateToken(user.getUsername());
-            List<String> roles = existingUser.getRoles();
-            UserDTO userDTO = new UserDTO(token, existingUser.getUsername(), roles);
+            String token = jwtService.generateToken(user.getUsername(), existingUser.getRoles());
+            UserDTO userDTO = new UserDTO(token, existingUser.getUsername(), existingUser.getId(), existingUser.getRoles());
             return ResponseEntity.ok(userDTO);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
